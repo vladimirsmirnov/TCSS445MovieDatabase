@@ -3,6 +3,6 @@
 # files in that directory for your use, but if you add their file types
 # here then we won't all have to deal with conflicting IDEs.
 
-# here is an example of ignoting all ececutable files
+# here is an example of ignoting all ececutable files.
 # ignore all files (*) ending with .exe
 *.exe
