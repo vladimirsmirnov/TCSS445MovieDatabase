@@ -1,7 +1,7 @@
 # add any file types here you don't want git to add to the repository.
 # so do you best to keep only our code files here, your own IDE will save
 # files in that directory for your use, but if you add their file types
-# here then we won't all have to deal with conflicting IDEs.
+# here then we won't all have to deal with conflicting IDEs
 
 # here is an example of ignoting all ececutable files.
 # ignore all files (*) ending with .exe
