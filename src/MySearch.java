@@ -17,6 +17,7 @@ import java.sql.Statement;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -80,6 +81,24 @@ public class MySearch {
             gbc.weightx = 0;
             search = new JButton("Search");
             searchPane.add(search, gbc);
+            JLabel lbl = new JLabel("YEAR");
+            lbl.setVisible(true);
+
+            searchPane.add(lbl);
+
+            String[] choices = { "START","CHOICE 2", "CHOICE 3","CHOICE 4","CHOICE 5","CHOICE 6"};
+
+            final JComboBox<String> startYear = new JComboBox<String>(choices);
+            
+            String[] choices2 = { "END","CHOICE 2", "CHOICE 3","CHOICE 4","CHOICE 5","CHOICE 6"};
+
+            final JComboBox<String> endYear = new JComboBox<String>(choices2);
+
+            startYear.setVisible(true);
+            searchPane.add(startYear);
+            
+            endYear.setVisible(true);
+            searchPane.add(endYear);
 
             add(searchPane, BorderLayout.NORTH);
 
@@ -103,7 +122,7 @@ public class MySearch {
 
         			//1.Get connection to database
 //        			Connection myCon = DriverManager.getConnection("jdbc:mysql://LocalHost/world", "root", "Lita1386!"); // replace world with the name of your database, put your password in ""
-            		Connection myCon = DriverManager.getConnection("jdbc:mysql://yamdb.ddns.net/yamdb", "devs", "P@ssw0rd"); // replace world with the name of your database, put your password in ""
+            		Connection myCon = DriverManager.getConnection("jdbc:mysql://yamdb.ddns.net/yamdb?useSSL=false", "devs", "P@ssw0rd"); // replace world with the name of your database, put your password in ""
             		
             		//2. Create a statement
         			Statement myStmt = myCon.createStatement();
@@ -117,7 +136,7 @@ public class MySearch {
         			ResultSet rs = pst.executeQuery();*/
         			String js = searchText;
         			
-        		ResultSet rs = myStmt.executeQuery("select * from Ratings WHERE Title = '" + js + "'");
+        		ResultSet rs = myStmt.executeQuery("select * from Movies WHERE Title = '" + js + "'");
         			
         			//ResultSet rs = myStmt.executeQuery("select * from test");
         			
@@ -125,7 +144,8 @@ public class MySearch {
         			//4 Process the result set
         			
         			 while(rs.next()) {
-        				model.addElement(rs.getString("Title"));
+        				model.addElement(rs.getString("Title") + rs.getString("Year"));
+        				
         	         }
         	        /*if (searchText.equals(query)) {
         	            System.out.println("Searching names.."  + query);
