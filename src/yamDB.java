@@ -36,8 +36,8 @@ import java.awt.Dimension;
 public class yamDB {
 
 	private JFrame frame;
-	 private JTextField txtName;
-	 private JTextField txtNameYear;
+	 private JTextField jtxtFieldName;
+	 private JTextField jtxtFieldYear;
      private JButton btnSearch;
      private DefaultListModel<String> model;
 
@@ -87,9 +87,9 @@ public class yamDB {
 		JPanel innerPan = new JPanel();
 		innerPan.setLayout(new BoxLayout(innerPan, BoxLayout.X_AXIS));
 		JLabel lb1 = new JLabel("Search by Name :  ");
-	    txtName = new JTextField();
+	    jtxtFieldName = new JTextField();
 		innerPan.add(lb1);
-		innerPan.add(txtName);
+		innerPan.add(jtxtFieldName);
 
 		//search by year
 		JPanel innerPan2 = new JPanel();
@@ -101,13 +101,13 @@ public class yamDB {
 			yesrList.add(i);
 			years.addItem(i);
 		}*/
-		txtNameYear = new JTextField();
+		jtxtFieldYear = new JTextField();
 		
 		//years.addItem(yesrList);
 		
 		innerPan2.add(lb2);
 		//innerPan2.add(years);
-		innerPan2.add(txtNameYear);
+		innerPan2.add(jtxtFieldYear);
 		//search button
 		JPanel innerPan3 = new JPanel();
 		innerPan3.setLayout(new BorderLayout());
@@ -115,8 +115,8 @@ public class yamDB {
 		ActionHandler handler = new ActionHandler();
 
         btnSearch.addActionListener(handler);
-        txtName.addActionListener(handler);
-        txtNameYear.addActionListener(handler);
+        jtxtFieldName.addActionListener(handler);
+        jtxtFieldYear.addActionListener(handler);
 		innerPan3.add(btnSearch,BorderLayout.CENTER);
 		
 		
@@ -179,17 +179,20 @@ public class yamDB {
          		//2. Create a statement
      			Statement myStmt = myCon.createStatement();
      			//3 Execute SQl query
-     			String searchText = txtName.getText();
-     			String search2Text = txtNameYear.getText();
-     			
+     			String name = jtxtFieldName.getText();
+     			String date = jtxtFieldYear.getText();
+     			String rank = null;
+     			String votes = null;
      			/*String query = "select * from test WHERE name = ?";
      			PreparedStatement pst = (PreparedStatement) myCon.prepareStatement(query);
      			pst.setString(1, "%" + searchText + "%");
      			ResultSet rs = pst.executeQuery();*/
-     			String js = searchText;
-     			String js2 = search2Text;
-     		
-     		ResultSet rs = myStmt.executeQuery("select * from Movies WHERE Title = '" + js + "' AND Year = '" + js2 + "'");
+     		String searchStatement = "select * from Ratings WHERE Title = '" + name + "'";
+         		//also search date if we were sent one
+         	if(date.length() == 4) {
+         		searchStatement += " AND Year = '" + date + "'";
+         	}
+     		ResultSet rs = myStmt.executeQuery(searchStatement);
      			
      			//ResultSet rs = myStmt.executeQuery("select * from test");
      			
@@ -197,7 +200,12 @@ public class yamDB {
      			//4 Process the result set
      			
      			 while(rs.next()) {
-     				model.addElement(rs.getString("Title") + ", " + rs.getString("Year"));
+     				name = rs.getString("Title");
+     				date = rs.getString("Year").substring(0, 4);
+     				//rank = rs.getString("Rank");
+     				//votes = rs.getString("Votes");
+     				
+     				model.addElement("Movie: " + name + "    Release Date: " + date);// + "    Rating: " + name + "     Votes: " + date);
      				
      	         }
      	        /*if (searchText.equals(query)) {
