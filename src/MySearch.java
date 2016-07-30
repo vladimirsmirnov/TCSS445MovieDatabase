@@ -102,8 +102,10 @@ public class MySearch {
             	try {
 
         			//1.Get connection to database
-        			Connection myCon = DriverManager.getConnection("jdbc:mysql://LocalHost/world", "root", YourPassword); // replace world with the name of your database, put your password in ""
-        			//2. Create a statement
+//        			Connection myCon = DriverManager.getConnection("jdbc:mysql://LocalHost/world", "root", "Lita1386!"); // replace world with the name of your database, put your password in ""
+            		Connection myCon = DriverManager.getConnection("jdbc:mysql://yamdb.ddns.net/yamdb", "devs", "P@ssw0rd"); // replace world with the name of your database, put your password in ""
+            		
+            		//2. Create a statement
         			Statement myStmt = myCon.createStatement();
         			//3 Execute SQl query
         			String searchText = findMovie.getText();
@@ -115,7 +117,7 @@ public class MySearch {
         			ResultSet rs = pst.executeQuery();*/
         			String js = searchText;
         			
-        		ResultSet rs = myStmt.executeQuery("select * from test WHERE name = '" + js + "'");
+        		ResultSet rs = myStmt.executeQuery("select * from Ratings WHERE Title = '" + js + "'");
         			
         			//ResultSet rs = myStmt.executeQuery("select * from test");
         			
@@ -123,7 +125,7 @@ public class MySearch {
         			//4 Process the result set
         			
         			 while(rs.next()) {
-        				model.addElement(rs.getString("name"));
+        				model.addElement(rs.getString("Title"));
         	         }
         	        /*if (searchText.equals(query)) {
         	            System.out.println("Searching names.."  + query);
