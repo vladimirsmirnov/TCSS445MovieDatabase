@@ -17,3 +17,6 @@
 
 # ignore all files (*) ending with .project
 *.project
+
+# ignore all files (*) ending with .prefs
+*.prefs
