@@ -187,25 +187,43 @@ public class yamDB {
      			PreparedStatement pst = (PreparedStatement) myCon.prepareStatement(query);
      			pst.setString(1, "%" + searchText + "%");
      			ResultSet rs = pst.executeQuery();*/
-     		String searchStatement = "select * from Ratings WHERE Title = '" + name + "'";
+     		String searchStatement = "select * from Ratings";
          		//also search date if we were sent one
-         	if(date.length() == 4) {
-         		searchStatement += " AND Year = '" + date + "'";
+     		String outputString = "";
+     		boolean nothingToSearch = false;
+     		if(date.length() == 4 && (name.length() > 0 && name != null)) {
+     			searchStatement += " WHERE Title = '" + name + "' AND Year = '" + date + "'";
+     		}
+     		else if(date.length() == 4) {
+         		searchStatement += " WHERE Year = '" + date + "'";
          	}
+     		else if(name.length() > 0 && name != null) {
+         		searchStatement += " WHERE Title = '" + name + "'";
+         	}
+     		else {
+     			nothingToSearch = true;
+     			outputString = "Sorry, I didn't recieve valid information to search. Check your date or title.";
+     		}
      		ResultSet rs = myStmt.executeQuery(searchStatement);
      			
      			//ResultSet rs = myStmt.executeQuery("select * from test");
      			
      			
      			//4 Process the result set
-     			
+     			String previousOutput = "";
      			 while(rs.next()) {
      				name = rs.getString("Title");
+     	     		System.out.println(name);
      				date = rs.getString("Year").substring(0, 4);
-     				//rank = rs.getString("Rank");
-     				//votes = rs.getString("Votes");
-     				
-     				model.addElement("Movie: " + name + "    Release Date: " + date);// + "    Rating: " + name + "     Votes: " + date);
+     				rank = rs.getString("Rank");
+     				votes = rs.getString("Votes");
+     				if(!nothingToSearch) {
+     					outputString = "Movie: " + name + "    Release Date: " + date + "    Rating: " + rank + "    Votes: " + votes;
+     				}
+     				if(!outputString.equals(previousOutput)) {
+     					model.addElement(outputString);
+     					previousOutput = outputString;
+     				}
      				
      	         }
      	        /*if (searchText.equals(query)) {
