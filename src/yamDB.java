@@ -78,13 +78,15 @@ public class yamDB {
 		ImageIcon icon = createImageIcon("logo.png","");
 		lbIcon.setIcon(icon);
 
-		
+		//radio buttons
 		JPanel innerPan1 = new JPanel();
 		innerPan1.setLayout(new BoxLayout(innerPan1, BoxLayout.X_AXIS));
+		JLabel radiolb = new JLabel("I WANT TO  ");
 		JRadioButton searchButton = new JRadioButton(" SEARCH");
 		searchButton.setSelected(true);
-		JRadioButton rouleteButton = new JRadioButton(" ROULETTE");
-		JRadioButton predictorButton = new JRadioButton(" PREDICTOR");
+		JRadioButton rouleteButton = new JRadioButton(" PLAY ROULETTE");
+		JRadioButton predictorButton = new JRadioButton(" USE PREDICTOR");
+		innerPan1.add(radiolb);
 		innerPan1.add(searchButton);
 		innerPan1.add(rouleteButton);
 		innerPan1.add(predictorButton);
